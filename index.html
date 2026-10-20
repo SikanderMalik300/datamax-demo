@@ -3,25 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ARMS Atlas — Alveolar Rhabdomyosarcoma Literature & Pathway Explorer (Demo)</title>
-  <meta name="description" content="Demo: a searchable literature database for Alveolar Rhabdomyosarcoma, linking papers to fusions, genes and signalling pathways." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%AC%3C/text%3E%3C/svg%3E" />
+  <title>ARMS Atlas — Alveolar Rhabdomyosarcoma literature &amp; pathway reference</title>
+  <meta name="description" content="A searchable reference of Alveolar Rhabdomyosarcoma literature, linking papers to fusions, genes and signalling pathways." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='6' y='3' width='5' height='10' rx='2.5' fill='%231b1a17'/%3E%3Crect x='6' y='15' width='5' height='10' rx='2.5' fill='%2315466e'/%3E%3Crect x='17' y='3' width='5' height='10' rx='2.5' fill='%2315466e'/%3E%3Crect x='17' y='15' width='5' height='10' rx='2.5' fill='%231b1a17'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Libre+Franklin:wght@400;450;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <!-- ===================== HEADER ===================== -->
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="brand">
-        <div class="brand-mark">🧬</div>
-        <div class="brand-text">
-          <h1>ARMS&nbsp;Atlas <span class="demo-badge" title="This is a demonstration prototype, not the final product">DEMO</span></h1>
-          <p>Alveolar Rhabdomyosarcoma · literature &amp; pathway explorer</p>
-        </div>
-      </div>
-      <nav class="tabs" id="tabs">
+  <!-- ===================== MASTHEAD ===================== -->
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="brand" href="#" aria-label="ARMS Atlas home">
+        <svg class="mark" viewBox="0 0 28 28" width="26" height="26" aria-hidden="true">
+          <rect x="6" y="3" width="5" height="10" rx="2.5" />
+          <rect x="6" y="15" width="5" height="10" rx="2.5" class="accent" />
+          <rect x="17" y="3" width="5" height="10" rx="2.5" class="accent" />
+          <rect x="17" y="15" width="5" height="10" rx="2.5" />
+        </svg>
+        <span class="wordmark">ARMS&nbsp;Atlas</span>
+        <span class="kicker">Demo</span>
+      </a>
+      <p class="tagline">Alveolar rhabdomyosarcoma — literature &amp; pathway reference</p>
+      <nav class="tabs" id="tabs" aria-label="Views">
         <button class="tab is-active" data-view="papers">Papers</button>
-        <button class="tab" data-view="pathways">Pathway&nbsp;Explorer</button>
+        <button class="tab" data-view="pathways">Pathways</button>
         <button class="tab" data-view="fusions">Fusions</button>
         <button class="tab" data-view="about">About</button>
       </nav>
@@ -30,48 +37,47 @@
 
   <main class="container">
 
-    <!-- ===================== PAPERS VIEW ===================== -->
+    <!-- ===================== PAPERS ===================== -->
     <section id="view-papers" class="view is-active">
-      <div class="stats-bar" id="stats-bar"></div>
+      <p class="corpus" id="corpus"></p>
 
       <div class="papers-layout">
-        <!-- Filters sidebar -->
-        <aside class="filters" id="filters">
+        <!-- Filter rail -->
+        <aside class="rail" id="rail">
           <div class="search-box">
-            <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             <input type="search" id="search" placeholder="Search titles, findings, authors, genes…" autocomplete="off" />
           </div>
-          <button class="clear-all" id="clear-all" hidden>✕ Clear all filters</button>
+          <button class="clear-all" id="clear-all" hidden>Clear all filters</button>
 
-          <div class="filter-group" data-group="fusion">
-            <h3>Fusion <span class="chev">▾</span></h3>
-            <div class="filter-options" id="filter-fusion"></div>
-          </div>
-          <div class="filter-group" data-group="pathway">
-            <h3>Pathway <span class="chev">▾</span></h3>
-            <div class="filter-options" id="filter-pathway"></div>
-          </div>
-          <div class="filter-group collapsed" data-group="gene">
-            <h3>Gene <span class="chev">▾</span></h3>
-            <div class="filter-options gene-options" id="filter-gene"></div>
-          </div>
+          <section class="facet" data-group="fusion">
+            <h3>Fusion</h3>
+            <div class="facet-opts" id="filter-fusion"></div>
+          </section>
+          <section class="facet" data-group="pathway">
+            <h3>Pathway</h3>
+            <div class="facet-opts" id="filter-pathway"></div>
+          </section>
+          <section class="facet collapsed" data-group="gene">
+            <h3>Gene <span class="chev" aria-hidden="true"></span></h3>
+            <div class="facet-opts gene-opts" id="filter-gene"></div>
+          </section>
         </aside>
 
         <!-- Results -->
         <div class="results">
           <div class="results-head">
             <span id="result-count" class="result-count"></span>
-            <div class="sort">
-              <label for="sort-select">Sort</label>
+            <label class="sort">
+              <span>Sort</span>
               <select id="sort-select">
-                <option value="year-desc">Newest first</option>
-                <option value="year-asc">Oldest first</option>
+                <option value="year-desc">Newest</option>
+                <option value="year-asc">Oldest</option>
                 <option value="title">Title A–Z</option>
               </select>
-            </div>
+            </label>
           </div>
           <div class="active-chips" id="active-chips"></div>
-          <div id="paper-list" class="paper-list"></div>
+          <ol id="paper-list" class="paper-list"></ol>
           <div id="empty-state" class="empty-state" hidden>
             <p>No papers match your filters.</p>
             <button class="btn-link" id="reset-from-empty">Reset filters</button>
@@ -80,85 +86,89 @@
       </div>
     </section>
 
-    <!-- ===================== PATHWAY EXPLORER VIEW ===================== -->
+    <!-- ===================== PATHWAYS ===================== -->
     <section id="view-pathways" class="view">
-      <div class="view-intro">
-        <h2>Pathway Explorer</h2>
+      <header class="view-head">
+        <h2>Pathways</h2>
         <p>
-          The PAX3::FOXO1 cell runs on many signalling pathways. Each pathway has its own
-          literature — often in papers that never mention rhabdomyosarcoma. Select a pathway to see
-          how it <strong>connects back to the fusion</strong>, and which papers in the database touch it.
-          This is the foundation for the <em>stage&nbsp;2</em> cross-pathway expansion.
+          The PAX3::FOXO1 cell runs on many signalling pathways, each with its own literature —
+          often in papers that never mention rhabdomyosarcoma. The right-hand column states how each
+          pathway connects back to the fusion. This is the basis for the stage-2 cross-pathway expansion.
         </p>
-      </div>
-      <div class="pathway-grid" id="pathway-grid"></div>
+      </header>
+      <div class="pathway-table" id="pathway-list"></div>
     </section>
 
-    <!-- ===================== FUSIONS VIEW ===================== -->
+    <!-- ===================== FUSIONS ===================== -->
     <section id="view-fusions" class="view">
-      <div class="view-intro">
-        <h2>Fusion Subtypes</h2>
+      <header class="view-head">
+        <h2>Fusion subtypes</h2>
         <p>
-          Every paper is tagged by the fusion(s) it concerns. The database is structured so new
-          fusions can be added as data — nothing is rebuilt. Click a card to see its papers.
+          Every paper is tagged by the fusion(s) it concerns, so new fusions are added as data — nothing
+          is rebuilt. Select a row to see its papers.
         </p>
+      </header>
+      <div class="table-wrap">
+        <table class="fusion-table">
+          <thead>
+            <tr>
+              <th scope="col">Fusion</th>
+              <th scope="col">Translocation</th>
+              <th scope="col">Frequency</th>
+              <th scope="col">Prognosis</th>
+              <th scope="col" class="num">Papers</th>
+            </tr>
+          </thead>
+          <tbody id="fusion-tbody"></tbody>
+        </table>
       </div>
-      <div class="fusion-grid" id="fusion-grid"></div>
     </section>
 
-    <!-- ===================== ABOUT VIEW ===================== -->
+    <!-- ===================== ABOUT ===================== -->
     <section id="view-about" class="view">
       <div class="about">
-        <h2>About this demo</h2>
+        <header class="view-head">
+          <h2>About this demo</h2>
+        </header>
         <p class="lead">
-          A working prototype of a searchable literature database for Alveolar Rhabdomyosarcoma
-          (ARMS), built to show the quality of the interface and the underlying data model before
-          building the full product.
+          A working prototype of a searchable literature reference for Alveolar Rhabdomyosarcoma (ARMS),
+          built to show the quality of the interface and the data model before building the full product.
         </p>
 
-        <div class="about-cols">
-          <div class="about-card">
-            <h3>What you're looking at</h3>
-            <ul>
+        <div class="about-grid">
+          <section>
+            <h3>What this is</h3>
+            <ul class="plain">
               <li><strong>35 real, PMID-verified papers</strong> — every record links to its genuine PubMed entry.</li>
-              <li>Each paper is tagged by <strong>fusion</strong>, <strong>gene</strong> and <strong>pathway</strong> — three separate, linked layers.</li>
-              <li>A plain-language <strong>AI-style summary</strong> of each paper's key finding.</li>
-              <li>A <strong>Pathway Explorer</strong> that links any pathway back to PAX3::FOXO1.</li>
+              <li>Each paper tagged across three linked layers: <strong>fusion</strong>, <strong>gene</strong>, <strong>pathway</strong>.</li>
+              <li>A plain-language summary of each paper's key finding.</li>
+              <li>A pathway view that links any pathway back to PAX3::FOXO1.</li>
             </ul>
-          </div>
-          <div class="about-card">
-            <h3>How the real product is built</h3>
+          </section>
+          <section>
+            <h3>How the product is built</h3>
             <ol class="pipeline">
-              <li><span class="pill">1</span> Harvest papers from PubMed / Europe PMC</li>
-              <li><span class="pill">2</span> AI tags each paper by fusion, gene &amp; pathway</li>
-              <li><span class="pill">3</span> Store in a searchable database</li>
-              <li><span class="pill">4</span> This interface queries that database</li>
+              <li><span class="step">01</span> Harvest papers from PubMed / Europe PMC</li>
+              <li><span class="step">02</span> Tag each paper by fusion, gene &amp; pathway</li>
+              <li><span class="step">03</span> Store in a searchable database</li>
+              <li><span class="step">04</span> This interface queries that database</li>
             </ol>
-            <p class="muted">In this demo the data is a hand-curated export so it can run entirely in the browser (no server) and be hosted on GitHub Pages.</p>
-          </div>
+            <p class="note-inline">In this demo the data is a curated export, so it runs entirely in the browser — no server — and hosts on GitHub Pages.</p>
+          </section>
         </div>
 
-        <div class="roadmap">
+        <section class="roadmap">
           <h3>Roadmap</h3>
-          <div class="roadmap-row">
-            <div class="roadmap-stage done">
-              <h4>Stage 1 — this demo</h4>
-              <p>ARMS papers, tagged by fusion &amp; gene, fully searchable, with pathway links. Starting with PAX3::FOXO1, structured for every fusion.</p>
-            </div>
-            <div class="roadmap-stage next">
-              <h4>Stage 2 — pathway expansion</h4>
-              <p>Pull in papers from other cancers and general cell biology for each pathway (PI3K/AKT/mTOR, Hippo/YAP1, Wnt, Notch, CDK4/6 …) as new linked layers. Nothing is rebuilt — a new pathway is just new data.</p>
-            </div>
-            <div class="roadmap-stage future">
-              <h4>Stage 3 — data &amp; modelling</h4>
-              <p>Connect expression datasets (GEO / TCGA-style) and build models on the organised data.</p>
-            </div>
-          </div>
-        </div>
+          <dl>
+            <div><dt>Stage 1 <span class="tag-state done">this demo</span></dt><dd>ARMS papers, tagged by fusion &amp; gene, fully searchable, with pathway links. Starts with PAX3::FOXO1, structured for every fusion.</dd></div>
+            <div><dt>Stage 2 <span class="tag-state">next</span></dt><dd>Pull in papers from other cancers and general cell biology for each pathway as new linked layers. Nothing is rebuilt — a new pathway is new data.</dd></div>
+            <div><dt>Stage 3</dt><dd>Connect expression datasets (GEO / TCGA-style) and build models on the organised data.</dd></div>
+          </dl>
+        </section>
 
         <p class="disclaimer">
-          ⚠️ Demonstration prototype for research workflow evaluation only — not a medical or clinical
-          decision tool. Paper summaries are concise paraphrases; always consult the linked primary source.
+          Demonstration prototype for research-workflow evaluation only — not a medical or clinical decision
+          tool. Summaries are concise paraphrases; always consult the linked primary source.
         </p>
       </div>
     </section>
@@ -167,17 +177,17 @@
 
   <footer class="site-footer">
     <span>ARMS Atlas — demonstration prototype</span>
-    <span class="dot">·</span>
-    <span>Data: <span id="footer-count"></span> PMID-verified publications</span>
-    <span class="dot">·</span>
-    <span>Static build · hostable on GitHub Pages</span>
+    <span>·</span>
+    <span><span id="footer-count"></span> PMID-verified publications</span>
+    <span>·</span>
+    <span>Static build, hostable on GitHub Pages</span>
   </footer>
 
-  <!-- Paper detail modal -->
+  <!-- Detail modal -->
   <div class="modal" id="modal" hidden>
     <div class="modal-backdrop" data-close></div>
     <div class="modal-card" role="dialog" aria-modal="true">
-      <button class="modal-close" data-close aria-label="Close">✕</button>
+      <button class="modal-close" data-close aria-label="Close">&times;</button>
       <div id="modal-body"></div>
     </div>
   </div>
